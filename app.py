@@ -117,8 +117,24 @@ elif case == "CS3: New-Build (Optimized)":
 # ==============================
 st.subheader("1) Decision context")
 solution_type = st.selectbox("Solution type", ["No-Build", "Old-Build", "New-Build"], index=["No-Build","Old-Build","New-Build"].index(solution_type))
-loi = st.slider("Level of Importance (LoI)", 1, 5, int(loi))
+# ---- Level of Importance (paper-based) ----
+st.subheader("Need importance (paper-based)")
 
+LOI_OPTIONS = {
+    "Very Low – Personal / Recreational": 1,
+    "Low – Personal / Secondary": 2,
+    "Medium – Housing / Office / Industrial": 3,
+    "High – Public / Social (non-critical)": 4,
+    "Very High – Post-disaster / Critical": 5
+}
+
+loi_label = st.selectbox(
+    "Select building/space importance category",
+    list(LOI_OPTIONS.keys())
+)
+
+loi_score = LOI_OPTIONS[loi_label]
+NI = loi_score / 5
 st.subheader("2) Justification inputs")
 if solution_type == "No-Build":
     SF = solution_fitness_no_build()
